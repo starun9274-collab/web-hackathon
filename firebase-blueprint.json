@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with RPG progression, level, attributes, and streak.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "level": { "type": "integer", "minimum": 1 },
+        "totalXP": { "type": "integer", "minimum": 0 },
+        "currentXP": { "type": "integer", "minimum": 0 },
+        "coins": { "type": "integer", "minimum": 0 },
+        "streak": { "type": "integer", "minimum": 0 },
+        "lastActivityDate": { "type": "string" },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "intellect": { "type": "integer", "minimum": 0 },
+            "strength": { "type": "integer", "minimum": 0 },
+            "discipline": { "type": "integer", "minimum": 0 },
+            "creativity": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["intellect", "strength", "discipline", "creativity"]
+        },
+        "createdAt": { "type": "string" },
+        "equippedTheme": { "type": "string" },
+        "equippedBadge": { "type": "string" }
+      },
+      "required": ["name", "email", "level", "totalXP", "coins", "streak", "attributes", "createdAt"]
+    },
+    "Quest": {
+      "title": "Quest",
+      "description": "Real-world task mapped to an RPG category.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string", "enum": ["Study", "Exercise", "Habit", "Creative"] },
+        "completed": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "completedAt": { "type": "string" }
+      },
+      "required": ["title", "category", "completed", "userId", "createdAt"]
+    },
+    "TaskHistory": {
+      "title": "TaskHistory",
+      "description": "Historical record of completed quests and rewards earned.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "taskId": { "type": "string" },
+        "taskTitle": { "type": "string" },
+        "category": { "type": "string" },
+        "xpEarned": { "type": "integer" },
+        "coinsEarned": { "type": "integer" },
+        "completedAt": { "type": "string" }
+      },
+      "required": ["userId", "taskId", "completedAt", "xpEarned", "coinsEarned", "category"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Item owned in user inventory.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "itemId": { "type": "string" },
+        "itemName": { "type": "string" },
+        "itemType": { "type": "string" },
+        "purchasedAt": { "type": "string" }
+      },
+      "required": ["userId", "itemId", "itemName", "itemType", "purchasedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user RPG profile and stats"
+    },
+    "/users/{userId}/quests/{questId}": {
+      "schema": "Quest",
+      "description": "User's active and completed quests"
+    },
+    "/users/{userId}/taskHistory/{historyId}": {
+      "schema": "TaskHistory",
+      "description": "Log of completed quests"
+    },
+    "/users/{userId}/inventory/{itemId}": {
+      "schema": "InventoryItem",
+      "description": "Virtual items purchased by user"
+    }
+  }
+}

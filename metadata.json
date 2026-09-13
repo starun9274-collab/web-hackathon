@@ -1,0 +1,6 @@
+{
+  "name": "Life RPG",
+  "description": "Turn your daily routines, fitness, study goals, and habits into epic RPG quests. Earn XP, level up non-linearly, boost your 4-pillar attributes, and forge real-world discipline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
